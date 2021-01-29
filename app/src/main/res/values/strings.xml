@@ -1,10 +1,15 @@
 <resources>
+    <!-- Strings a usar en la app -->
     <string name="app_name">GeoQuiz</string>
-    <string-array name="preguntas">
-        <item value="true">La capital de Canadá es Toronto.</item>
-        <item>Japón está más alejada de España que China.</item>
-        <item>Las Islas Canarias están en el Mar Mediterráneo.</item>
-        <item>El mayor lago del mundo es el Lago Victoria.</item>
-        <item>Una parte de los alpes está en Italia.</item>
-    </string-array>
+    <string name="true_button">Verdadero</string>
+    <string name="false_button">Falso</string>
+    <string name="correct_toast">Correcto!!!</string>
+    <string name="incorrect_toast">Incorrecto!!!</string>
+    <string name="next_button">Siguiente</string>
+    <!-- Preguntas que mostramos-->
+    <string name="question_one">La capital de Canadá es Toronto.</string>
+    <string name="question_two">Japón está más alejada de España que China.</string>
+    <string name="question_three">Las Islas Canarias están en el Mar Mediterráneo.</string>
+    <string name="question_four">El mayor lago del mundo es el Lago Victoria.</string>
+    <string name="question_five">Una parte de los alpes está en Italia.</string>
 </resources>

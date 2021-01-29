@@ -2,7 +2,6 @@ package hfad.com.geoquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,59 +10,75 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView textView;
-    private Button buttonNext, buttonTrue, buttonFalse;
-    int i;
+    /*variables miembro para capturar los diferentes View desde Java*/
+    private Button mTrueButton;
+    private Button mFalseButton;
+    private Button mNextButton;
+    private TextView mQuestionTextView;
+    /*indice para saber que pregunta del array estamos leyendo*/
+    private int mCurrentIndex=0;
+    /*Array de objetos Question*/
+    private Question[] mQuestionBank = new Question[]{
+            new Question(R.string.question_one,false),
+            new Question(R.string.question_two,true),
+            new Question(R.string.question_three,false),
+            new Question(R.string.question_four,false),
+            new Question(R.string.question_five,true)
+    };
 
+    /*Metodo que nos devuelve el ID de Recurso de la pregunta que queremos mostrar*/
+    private void updateQuestion(){
+        int question = mQuestionBank[mCurrentIndex].getTextResId();
+        mQuestionTextView.setText(question);
+    }
+
+    /*Metodo para comprobar si la respuesta es correcta o no*/
+    /*Le pasamos un booleano cuando lo llamamos desde cada boton*/
+    /*Hacer notar que trabajamos con los ID de los recursos String no con el String directamente*/
+    private void checkAnswer(boolean userPressedTrue){
+        boolean answerIsTrue=mQuestionBank[mCurrentIndex].isAnswerTrue();
+        int messageResId=0;
+        if(userPressedTrue==answerIsTrue){
+            messageResId=R.string.correct_toast;
+        }else{
+            messageResId=R.string.incorrect_toast;
+        }
+        Toast.makeText(this,messageResId, Toast.LENGTH_SHORT).show();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView=findViewById(R.id.textView);
-        buttonNext=findViewById(R.id.buttonNext);
-        buttonTrue=findViewById(R.id.buttonTrue);
-        buttonFalse=findViewById(R.id.buttonFalse);
+        mQuestionTextView=(TextView)findViewById(R.id.textView);
 
-        i=0;
-
-        Resources res = getResources();
-        String[] preguntas = res.getStringArray(R.array.preguntas);
-        textView.setText(preguntas[i]);
-
-        buttonNext.setOnClickListener(new View.OnClickListener() {
+        mTrueButton = (Button)findViewById(R.id.buttonTrue);
+        mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                i++;
-                if(i<5)
-                    textView.setText(preguntas[i]);
-                else {
-                    i = 0;
-                    textView.setText(preguntas[i]);
-                }
+                checkAnswer(true);
             }
         });
-
-
-        buttonTrue.setOnClickListener(new View.OnClickListener() {
+        mFalseButton = (Button)findViewById(R.id.buttonFalse);
+        mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(i==1 || i==4)
-                    Toast.makeText(MainActivity.this, "Has acertado", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(MainActivity.this, "Has fallado", Toast.LENGTH_SHORT).show();
+                checkAnswer(false);
+
             }
         });
-
-        buttonFalse.setOnClickListener(new View.OnClickListener() {
+        mNextButton=(Button)findViewById(R.id.buttonNext);
+        /*Gestion del boton siguiente*/
+        /*Calculamos el indice de pregunta en el que nos encontramos*/
+        /*Aumentamos en 1 la pregunta, con la % nos aseguramos que no pasamos de las preguntas existentes*/
+        mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(i==0 || i==2 || i==3)
-                    Toast.makeText(MainActivity.this, "Has acertado", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(MainActivity.this, "Has fallado", Toast.LENGTH_SHORT).show();
+                mCurrentIndex=(mCurrentIndex+1)%mQuestionBank.length;
+                updateQuestion();
             }
         });
+        updateQuestion();
+
     }
 }
