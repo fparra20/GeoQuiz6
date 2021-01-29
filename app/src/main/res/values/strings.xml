@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">GeoQuiz</string>
+    <string-array name="preguntas">
+        <item value="true">La capital de Canadá es Toronto.</item>
+        <item>Japón está más alejada de España que China.</item>
+        <item>Las Islas Canarias están en el Mar Mediterráneo.</item>
+        <item>El mayor lago del mundo es el Lago Victoria.</item>
+        <item>Una parte de los alpes está en Italia.</item>
+    </string-array>
+</resources>
